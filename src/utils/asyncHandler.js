@@ -1,9 +1,9 @@
-export const asyncHandler = (requestHandler) => async(err, req, res, next) => {
+export const asyncHandler = (requestHandler) => async(req, res, next) => {
     try {
-        await fn()(req,res,next)
+        await requestHandler(req,res,next)
     } catch (error) {
-        res.status(err.code || 500).json({success: false, message: err.message})
-        
+        res.status(error.code || 500).json({success: false, message: error.message})
+        next(error)
     }
 
 }
